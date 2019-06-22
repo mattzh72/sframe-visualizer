@@ -63,11 +63,6 @@ def read_sframe(sframe, draw=False):
 
 
 
-frames = read_sframe('sample.sframe', draw=True)
-compile_video(frames)
-
-
-
 
 
 
