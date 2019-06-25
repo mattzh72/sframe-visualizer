@@ -54,7 +54,7 @@ python main.py
 
 ## Demo
 A sample visualization with bounding boxes and masks drawn.
-![Demo GIF](https://github.com/vitae-gravitas/sframe-visualizer/blob/master/README/demo.gif)
+> ![Demo GIF](https://github.com/vitae-gravitas/sframe-visualizer/blob/master/README/demo.gif)
 
 ## Extras
 Extracting Turicreate Images as a numpy ndarray:
