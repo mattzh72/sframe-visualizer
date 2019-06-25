@@ -34,16 +34,16 @@ git clone https://github.com/vitae-gravitas/sframe-visualizer.git
 Configure the `config.py` file. There are lots of ways to customize this.
 
 | Configuration     | Purpose           
-| -------------    |:-------------:| 
-| TARGET_DIR       | The directory to write the output to. | 
-| OUTPUT_NAME      | The name of the output MP4 file.    |  
-| SFRAME | The path of the SFrame to visualize. |  
-| DRAW_BOUNDINGS |If true, draws bounding boxes.|  
-| DRAW_MASKS |If true, draws masks. Make sure to enable this only if you have an SFrame with mask data.|  
-| FPS |Frames per second of the output video.|  
-| ANNOTATIONS_COL |Name of the annotations column in the SFrame.|  
-| IMAGE_COL |Name of the image column in the SFrame.|  
-| MASKS_COL |Name of the masks column in the SFrame.|  
+| -------------    |-------------| 
+| `TARGET_DIR`       | The directory to write the output to. | 
+| `OUTPUT_NAME`      | The name of the output MP4 file.    |  
+| `SFRAME` | The path of the SFrame to visualize. |  
+| `DRAW_BOUNDINGS` |If true, draws bounding boxes.|  
+| `DRAW_MASKS` |If true, draws masks. Make sure to enable this only if you have an SFrame with mask data.|  
+| `FPS` |Frames per second of the output video.|  
+| `ANNOTATIONS_COL` |Name of the annotations column in the SFrame.|  
+| `IMAGE_COL` |Name of the image column in the SFrame.|  
+| `MASKS_COL` |Name of the masks column in the SFrame.|  
 
 After configuration, simply run `main.py`.
 ```bash
