@@ -1,5 +1,8 @@
 import cv2
 import turicreate as tc
+from tqdm import tqdm
+
+from utils.draw import draw_mask
 
 def read_video(video_path):
 	video = cv2.VideoCapture(video_path)
@@ -15,12 +18,18 @@ def read_video(video_path):
 
 	return frames
 
-def compile_video(frames, target='./output.avi'):
+def compile_video(frames, rgb=True, target='./output.mp4'):
 	assert len(frames) > 0, 'Frames list is empty.'
 
 	height, width, layers = frames[0].shape
-	video = cv2.VideoWriter(target, 0, 1, (width,height))
-	for frame in frames:
+	codec = cv2.VideoWriter_fourcc(*'mp4v')
+	video = cv2.VideoWriter(target, codec, 60, (width,height))
+	
+	print("Writing to video " + target)
+	for frame in tqdm(frames):
+		if rgb:
+			frame = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
+
 		video.write(frame)
 
 	cv2.destroyAllWindows()
@@ -37,40 +46,17 @@ def convert_img(img):
 		_format_enum=RAW_FORMAT, 
 		_image_data_size=img.size)
 
-"""
-[{'label': 'barbell', 'type': 'rectangle', 'coordinates': {'x': 134.6328066601753, 'y': 192.2079239648583, 'width': 231.50588915898248, 'height': 110.18064159613388}, 'confidence': 0.7823181846848669}, {'label': 'barbell', 'type': 'rectangle', 'coordinates': {'x': 212.3092042818808, 'y': 186.7778821093862, 'width': 362.41656083327075, 'height': 179.77102903219372}, 'confidence': 0.5556210402434759}]
-"""
-def extract_bb(annotations):
-	bbs = {}
-
-	for a in annotations:
-		label = a['label']
-		coords = a['coordinates']
-		if label not in bbs:
-			bbs[label] = []			
-
-		bbs[label].append({'x': int(coords['x']), 'y': int(coords['y']), 'w': int(coords['width']), 'h': int(coords['height'])})
-
-	return bbs
-
-def read_sframe(sframe, draw=False):
+def extract_imgs_from_sframe(sframe, draw=False):
 	sf = tc.load_sframe(sframe)
 
 	if draw:
-		return [img.pixel_data for img in tc.object_detector.util.draw_bounding_boxes(sf['image'], sf['annotations'])]
+		print("Drawing bounding boxes...")
+		imgs = [img.pixel_data for img in tqdm(tc.object_detector.util.draw_bounding_boxes(sf['image'], sf['annotations']))]
+		print("Drawing masks...")
+		return [draw_mask(imgs[i], sf['stateMasks'][i]) for i in tqdm(range(len(sf)))]
+
 	else:
-		return [img.pixel_data for img in sf['image']]
+		imgs = [img.pixel_data for img in tqdm(sf['image'])]
 
-
-
-
-
-
-
-
-
-
-
-
-
+	return imgs
 
