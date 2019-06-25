@@ -4,29 +4,38 @@ from tqdm import tqdm
 
 from utils.draw import *
 
-def predict_on_video(video_path, model_path, draw_frame_num=True):
-	video = cv2.VideoCapture(video_path)
-	ret, frame = video.read()
+def predict_on_video(video_path, model_path, target_label=None, num_objs=-1, draw_frame_num=True):
+	model = tc.load_model(model_path)
+	frames = read_video(video_path)
 
-	count = 0
-	frames = []
-	frame_num = 1
+	pred_frames = []
 
-	while ret:
+	for i in tqdm(range(len(frames)), desc='Predicting'):
+		frame = frames[i]
+
 		# Predict and draw
 		tc_frame = get_tc_img(frame)
-		pred = model.predict(tc_frame)
+		pred = model.predict(tc_frame, verbose=False)
+		pred = clean_predictions(pred, target_label=target_label, num_objs=num_objs)
 		frame = tc.object_detector.util.draw_bounding_boxes(tc_frame, pred).pixel_data
 
 		if draw_frame_num:
-			frame = draw_text(frame, str(frame_num))
+			frame = draw_text(frame, str(i))
 
-		frames.append(frame)
-		count += 1
-		frame_num += 1
-		ret, frame = vidcap.read()
+		pred_frames.append(frame)
 
-	return frames
+	return pred_frames
+
+def clean_predictions(pred, target_label=None, num_objs=-1):
+	if target_label:
+		for i in range(len(pred)):
+			if pred[i]['label'] != target_label:
+				del pred[i]
+
+	if num_objs > 0:
+		pred = sorted(pred, reverse=True, key=lambda x: x['confidence'])[:num_objs]
+
+	return pred
 
 def read_video(video_path):
 	video = cv2.VideoCapture(video_path)
@@ -37,7 +46,7 @@ def read_video(video_path):
 
 	while ret:
 		frames.append(frame)
-		ret, frame = vidcap.read()
+		ret, frame = video.read()
 		count += 1
 
 	return frames

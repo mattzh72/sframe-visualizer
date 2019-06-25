@@ -1,8 +1,9 @@
 class Configs:
-	# Model Testing VS Pure Visualization
-	TEST_MODEL = False
-	VIDEO_PATH = ''
-	MODEL_PATH = ''
+	# Model Testing 
+	TEST_MODEL = True
+	VIDEO_PATH = './test.mov'
+	MODEL_PATH = './sample.model'
+	MAX_NUM_OBJECTS = 2
 
 	# Input/Output Configurations
 	TARGET_DIR = './'

@@ -4,8 +4,13 @@ from config import Configs
 import os
 import turicreate as tc
 
-if TEST_MODEL:
-	frames = predict_on_video(Configs.VIDEO_PATH, Configs.MODEL_PATH, draw_frame_num=Configs.DRAW_FRAME_NUM)
+if Configs.TEST_MODEL:
+	frames = predict_on_video(
+		Configs.VIDEO_PATH, 
+		Configs.MODEL_PATH, 
+		target_label=Configs.TARGET_LABEL, 
+		num_objs=Configs.MAX_NUM_OBJECTS, 
+		draw_frame_num=Configs.DRAW_FRAME_NUM)
 else:
 	frames = extract_imgs_from_sframe(
 		Configs.SFRAME, 
