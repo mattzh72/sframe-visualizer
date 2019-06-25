@@ -4,3 +4,6 @@ class Configs:
 	MODEL = './sample.model'
 	SFRAME = './sample.sframe'
 	OBJECT_LABEL = 'barbell'
+	DRAW_BOUNDINGS = True
+	DRAW_MASKS = True
+	FPS = 30

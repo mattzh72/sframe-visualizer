@@ -18,15 +18,14 @@ def read_video(video_path):
 
 	return frames
 
-def compile_video(frames, rgb=True, target='./output.mp4'):
+def compile_video(frames, rgb=True, fps=30, target='./output.mp4'):
 	assert len(frames) > 0, 'Frames list is empty.'
 
 	height, width, layers = frames[0].shape
 	codec = cv2.VideoWriter_fourcc(*'mp4v')
-	video = cv2.VideoWriter(target, codec, 60, (width,height))
+	video = cv2.VideoWriter(target, codec, fps, (width,height))
 	
-	print("Writing to video " + target)
-	for frame in tqdm(frames):
+	for frame in tqdm(frames, desc='Writing'):
 		if rgb:
 			frame = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
 
@@ -46,17 +45,22 @@ def convert_img(img):
 		_format_enum=RAW_FORMAT, 
 		_image_data_size=img.size)
 
-def extract_imgs_from_sframe(sframe, draw=False):
-	sf = tc.load_sframe(sframe)
+def extract_imgs_from_sframe(sframe, draw_boundings=False, draw_masks=False):
+	sf = list(tc.load_sframe(sframe))
 
-	if draw:
-		print("Drawing bounding boxes...")
-		imgs = [img.pixel_data for img in tqdm(tc.object_detector.util.draw_bounding_boxes(sf['image'], sf['annotations']))]
-		print("Drawing masks...")
-		return [draw_mask(imgs[i], sf['stateMasks'][i]) for i in tqdm(range(len(sf)))]
+	frames = []
+	for el in tqdm(sf, desc='Parsing'):
+		img = el['image']
 
-	else:
-		imgs = [img.pixel_data for img in tqdm(sf['image'])]
+		if draw_boundings:
+			img = tc.object_detector.util.draw_bounding_boxes(img, el['annotations']) 
 
-	return imgs
+		if draw_masks:
+			img = draw_mask(img.pixel_data, el['stateMasks']) 
+
+		frames.append(img.pixel_data if isinstance(img, tc.Image) else img)
+
+	return frames
+
+
 
