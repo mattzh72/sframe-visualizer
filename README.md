@@ -12,14 +12,16 @@ This package has the following dependencies: **OpenCV 4.1.0**, **Numpy 1.16.2**,
 This tool expects an SFrame in a standard Turicreate format. At the minimum, the SFrame needs two columns: 
 
  - An **image** column. This contains `turicreate.Image` objects that represent an image. 
-> Helpful tip: If you want to do your own hacking, you can extract the image in a numpy format by using the `.pixel_data` attribute on an turicreate Image object. This numpy format is how OpenCV and other libraries represent images.
- - An **annotations** column. This will contain a list of annotations, which Turicreate expects as a dictionary in this format (confidence is optional): `{'confidence':..,
+ - An **annotations** column. This will contain a list of annotations, which Turicreate expects as a dictionary (`confidence` is optional).
+```python
+{'confidence':..,
   'coordinates': {'height':...,
                   'width':...,
                   'x':...,
                   'y':...},
   'label':...,
-  'type':....}`.
+  'type':...}
+```
 
 Optionally, you can also have a third column which represents **masks**. Currently, this only support masks outputted by SiamMask. Go [here](https://github.com/foolwood/SiamMask) for more details.
 
@@ -49,3 +51,11 @@ After configuration, simply run `main.py`.
 ```bash
 python main.py
 ```
+## Extras
+Extracting Turicreate Images as a numpy ndarray:
+> If you want to do your own hacking, you can extract the image in a numpy format by using the `.pixel_data` attribute on an turicreate Image object. This numpy format is how OpenCV and other libraries represent images.
+
+## Demo
+
+
+
