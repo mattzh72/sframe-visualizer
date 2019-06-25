@@ -1,5 +1,5 @@
 class Configs:
-	TARGET_DIR = './output'
+	TARGET_DIR = './'
 	OUTPUT_NAME = 'result.mp4'
 	SFRAME = './sample.sframe'
 	DRAW_BOUNDINGS = True
