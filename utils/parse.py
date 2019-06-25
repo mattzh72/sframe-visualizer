@@ -45,18 +45,18 @@ def convert_img(img):
 		_format_enum=RAW_FORMAT, 
 		_image_data_size=img.size)
 
-def extract_imgs_from_sframe(sframe, draw_boundings=False, draw_masks=False):
+def extract_imgs_from_sframe(sframe, draw_boundings=False, draw_masks=False, annotations_col='annotations', image_col='image', masks_col='stateMasks'):
 	sf = list(tc.load_sframe(sframe))
 
 	frames = []
 	for el in tqdm(sf, desc='Parsing'):
-		img = el['image']
+		img = el[image_col]
 
 		if draw_boundings:
-			img = tc.object_detector.util.draw_bounding_boxes(img, el['annotations']) 
+			img = tc.object_detector.util.draw_bounding_boxes(img, el[annotations_col]) 
 
 		if draw_masks:
-			img = draw_mask(img.pixel_data, el['stateMasks']) 
+			img = draw_mask(img.pixel_data, el[masks_col]) 
 
 		frames.append(img.pixel_data if isinstance(img, tc.Image) else img)
 
