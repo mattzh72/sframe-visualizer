@@ -21,7 +21,7 @@ This tool expects an SFrame in a standard Turicreate format. At the minimum, the
   'label':...,
   'type':....}`.
 
-Optionally, you can also have a third column which represents **masks**. Currently, this only support masks outputted by SiamMask. Go [here]([https://github.com/foolwood/SiamMask](https://github.com/foolwood/SiamMask)) for more details.
+Optionally, you can also have a third column which represents **masks**. Currently, this only support masks outputted by SiamMask. Go [here](https://github.com/foolwood/SiamMask) for more details.
 
 ## Getting Started
 
