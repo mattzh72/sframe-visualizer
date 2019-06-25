@@ -35,24 +35,25 @@ git clone https://github.com/vitae-gravitas/sframe-visualizer.git
 
 Configure the `config.py` file. There are lots of ways to customize this.
 
-| Configuration     | Purpose           
-| -------------    |-------------| 
-| `TEST_MODEL`       | If true, this will load in the test video and model to visualize the model's predictions. Otherwise, it takes in an existing SFrame.| 
-| `VIDEO_PATH`       | The path of the test video. | 
-| `MODEL_PATH`       | The path of the Turicreate model. **Make sure this has a `.model` extension!** | 
-| `TARGET_DIR`       | The output directory. | 
-| `OUTPUT_NAME`      | The name of the output file. **Make sure this has a `.mp4` extension!**    |  
-| `SFRAME` | The path of the input SFrame. |  
-| `ANNOTATIONS_COL` |Name of the annotations column in the SFrame.|  
-| `IMAGE_COL` |Name of the image column in the SFrame.|  
-| `MASKS_COL` |Name of the masks column in the SFrame.|  
-| `DRAW_BOUNDINGS` |If true, draws bounding boxes.|  
-| `DRAW_MASKS` |If true, draws masks. **Make sure to enable this only if you have an SFrame with mask data.**|  
-| `DRAW_CENTERS` |If true, draws the centers of the bounding boxes.| 
-| `DRAW_CENTER_LINES` |If true, draws a contrail (based on the centers of the bounding boxes).| 
-| `DRAW_FRAME_NUM` |Draws the frame number on the top left corner of the video.| 
-| `FPS` |Frames per second of the output video.|  
-| `BUFFER` |The length of the contrail (based on the centers of the bounding boxes).|
+| Configuration  | Type    | Purpose    |       
+| -------------  |------------- |-------------| 
+| `TEST_MODEL`  | `bool` | If true, this will load in the test video and model to visualize the model's predictions. Otherwise, it takes in an existing SFrame.| 
+| `VIDEO_PATH`  | `str` | The path of the test video. | 
+| `MODEL_PATH`  | `str` | The path of the Turicreate model. **Make sure this has a `.model` extension!** | 
+| `MAX_NUM_OBJECTS`   | `int` |The maximum number of objects to draw on the screen. This is done by taking the top two objects with the highest prediction confidence. Set this to a negative number to include all objects.| 
+| `TARGET_DIR` | `str` | The output directory. | 
+| `OUTPUT_NAME`  | `str` | The name of the output file. **Make sure this has a `.mp4` extension!**    |  
+| `SFRAME` | `str` | The path of the input SFrame. |  
+| `ANNOTATIONS_COL` | `str`|Name of the annotations column in the SFrame.|  
+| `IMAGE_COL`| `str` |Name of the image column in the SFrame.|  
+| `MASKS_COL` | `str`|Name of the masks column in the SFrame.|  
+| `DRAW_BOUNDINGS`| `bool` |If true, draws bounding boxes.|  
+| `DRAW_MASKS` | `bool`|If true, draws masks. **Make sure to enable this only if you have an SFrame with mask data.**|  
+| `DRAW_CENTERS`| `bool` |If true, draws the centers of the bounding boxes.| 
+| `DRAW_CENTER_LINES` | `bool`|If true, draws a contrail (based on the centers of the bounding boxes).| 
+| `DRAW_FRAME_NUM`| `bool` |Draws the frame number on the top left corner of the video.| 
+| `FPS`| `int` |Frames per second of the output video.|  
+| `BUFFER` | `int`|The length of the contrail (based on the centers of the bounding boxes).|
 
 After configuration, simply run `main.py`.
 ```bash
