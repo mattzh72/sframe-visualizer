@@ -56,7 +56,3 @@ python main.py
 A sample visualization with bounding boxes and masks drawn.
 > ![Demo GIF](https://github.com/vitae-gravitas/sframe-visualizer/blob/master/README/demo.gif)
 
-## Extras
-Extracting Turicreate Images as a numpy ndarray:
-> If you want to do your own hacking, you can extract the image in a numpy format by using the `.pixel_data` attribute on an turicreate Image object. This numpy format is how OpenCV and other libraries represent images.
-
