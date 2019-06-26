@@ -97,3 +97,8 @@ SFrame Visualization             |  Model Predictions
 :-------------------------:|:-------------------------:
 <img src="https://github.com/vitae-gravitas/sframe-visualizer/blob/master/README/visual.gif" width="425"/>  |  <img src="https://github.com/vitae-gravitas/sframe-visualizer/blob/master/README/pred.gif" width="425"/> 
 
+Model Mask Prediction             |  Model Mask and Box Prediction
+:-------------------------:|:-------------------------:
+<img src="https://github.com/vitae-gravitas/sframe-visualizer/blob/master/README/mask.gif" width="425"/>  |  <img src="https://github.com/vitae-gravitas/sframe-visualizer/blob/master/README/mask_box.gif" width="425"/> 
+
+
