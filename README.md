@@ -7,7 +7,7 @@ SFrame-Visualizer is a video analysis tool written in 100%  Python to visualize 
 This package has the following dependencies: **OpenCV 4.1.0**, **Numpy 1.16.2**, **tqdm 4.28.1** and **Turicreate 5.6**.
 
 
-## Option 1: Preparing an SFrame for Visualization
+## Option 1: Preparing an SFrame
 
 This tool expects an SFrame in a standard Turicreate format. At the minimum, the SFrame needs two columns: 
 
@@ -43,7 +43,7 @@ BUFFER = 64
 ```
 This will take in input `sample.sframe` in the current working directory, and write the output at 30 frames a second to the current working directory as `result.mp4`. The tool will specifically search for columns named `annotations`, `image`, and `stateMasks` for annotation, image, and mask data respectively. There are no bounding boxes, masks, centers, or length 64 contrails drawn. The frame number will be shown.
 
-## Option 2: Preparing a Turicreate Model for Visualization
+## Option 2: Preparing a Turicreate Model
 
 This tool expects a model in a standard Turicreate format and a video (in any FOURCC-accpeted format). Simply set the right configurations! Here's an example set of configurations for model testing, where the video is named `test.mov` in the working directory, the model is named `sample.model` in the working directory, and every object predicted with the label `mainPlate` should be drawn.
 
