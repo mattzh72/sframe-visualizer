@@ -2,7 +2,7 @@
 
 ![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)
 
-SFrame-Visualizer is a video analysis tool written in 100%  Python to visualize SFrames for data analytics. It can be used to purely visualize a given SFrame, or can be used to visualize predictions made by `.model` on a target video. It is also capable of drawing bounding boxes, segmentations, moment centers, and contrail paths.
+SFrame-Visualizer is a video analysis tool written in 100%  Python to visualize SFrames for data analytics. It can be used to purely visualize a given SFrame, or can be used to visualize predictions made by `.model` on a target video. It is also capable of drawing **bounding boxes, segmentations, moment centers, and contrail paths**.
 
 This package has the following dependencies: **OpenCV 4.1.0**, **Numpy 1.16.2**, **tqdm 4.28.1** and **Turicreate 5.6**.
 
@@ -62,7 +62,8 @@ python main.py
 
 ## Demo
 Sample visualizations with bounding boxes and/or masks drawn.
-| Visualization  | Prediction   |     
-| -------------  |------------- |
-|![Demo GIF](https://github.com/vitae-gravitas/sframe-visualizer/blob/master/README/visual.gif)|![Demo GIF](https://github.com/vitae-gravitas/sframe-visualizer/blob/master/README/pred.gif)|
+
+SFrame Visualization             |  Model Predictions
+:-------------------------:|:-------------------------:
+<img src="https://github.com/vitae-gravitas/sframe-visualizer/blob/master/README/visual.gif" width="425"/>  |  <img src="https://github.com/vitae-gravitas/sframe-visualizer/blob/master/README/pred.gif" width="425"/> 
 
