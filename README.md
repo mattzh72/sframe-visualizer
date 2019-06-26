@@ -2,12 +2,12 @@
 
 ![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)
 
-SFrame-Visualizer is a video analysis tool written in 100%  Python to visualize SFrames for data analytics.
+SFrame-Visualizer is a video analysis tool written in 100%  Python to visualize SFrames for data analytics. It can be used to purely visualize a given SFrame, or can be used to visualize predictions made by `.model` on a target video. It is also capable of drawing **bounding boxes, segmentations, moment centers, and contrail paths**.
 
 This package has the following dependencies: **OpenCV 4.1.0**, **Numpy 1.16.2**, **tqdm 4.28.1** and **Turicreate 5.6**.
 
 
-## Preparing an SFrame 
+## Option 1: Preparing an SFrame
 
 This tool expects an SFrame in a standard Turicreate format. At the minimum, the SFrame needs two columns: 
 
@@ -24,6 +24,36 @@ This tool expects an SFrame in a standard Turicreate format. At the minimum, the
 ```
 
 Optionally, you can also have a third column which represents **masks**. Currently, this only support masks outputted by SiamMask. Go [here](https://github.com/foolwood/SiamMask) for more details.
+
+Here's an example set of configurations:
+```python
+TARGET_DIR = './'
+OUTPUT_NAME = 'result.mp4'
+SFRAME = './sample.sframe'
+ANNOTATIONS_COL = 'annotations'
+IMAGE_COL = 'image'
+MASKS_COL = 'stateMasks'
+DRAW_BOUNDINGS = False
+DRAW_MASKS = False
+DRAW_CENTERS = False
+DRAW_CENTER_LINES = False
+DRAW_FRAME_NUM = True
+FPS = 30
+BUFFER = 64
+```
+This will take in input `sample.sframe` in the current working directory, and write the output at 30 frames a second to the current working directory as `result.mp4`. The tool will specifically search for columns named `annotations`, `image`, and `stateMasks` for annotation, image, and mask data respectively. There are no bounding boxes, masks, centers, or length 64 contrails drawn. The frame number will be shown.
+
+## Option 2: Preparing a Turicreate Model
+
+This tool expects a model in a standard Turicreate format and a video (in any FOURCC-accpeted format). Simply set the right configurations! Here's an example set of configurations for model testing, where the video is named `test.mov` in the working directory, the model is named `sample.model` in the working directory, and every object predicted with the label `mainPlate` should be drawn.
+
+```python
+TEST_MODEL = True
+VIDEO_PATH = './test.mov'
+MODEL_PATH = './sample.model'
+MAX_NUM_OBJECTS = -1
+TARGET_LABEL = 'mainPlate'
+```
 
 ## Getting Started
 
@@ -61,6 +91,9 @@ python main.py
 ```
 
 ## Demo
-A sample visualization with bounding boxes and masks drawn.
-> ![Demo GIF](https://github.com/vitae-gravitas/sframe-visualizer/blob/master/README/demo.gif)
+Sample visualizations with bounding boxes and/or masks drawn.
+
+SFrame Visualization             |  Model Predictions
+:-------------------------:|:-------------------------:
+<img src="https://github.com/vitae-gravitas/sframe-visualizer/blob/master/README/visual.gif" width="425"/>  |  <img src="https://github.com/vitae-gravitas/sframe-visualizer/blob/master/README/pred.gif" width="425"/> 
 
