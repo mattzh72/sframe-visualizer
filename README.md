@@ -90,8 +90,8 @@ After configuration, simply run `main.py`.
 python main.py
 ```
 
-## Demo
-Sample visualizations with bounding boxes and/or masks drawn.
+## Demos
+Sample visualizations via sframes and models with bounding boxes and/or masks drawn.
 
 SFrame Visualization             |  Model Predictions
 :-------------------------:|:-------------------------:
