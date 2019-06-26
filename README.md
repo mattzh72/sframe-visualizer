@@ -27,19 +27,19 @@ Optionally, you can also have a third column which represents **masks**. Current
 
 Here's an example set of configurations:
 ```python
-	TARGET_DIR = './'
-	OUTPUT_NAME = 'result.mp4'
-	SFRAME = './sample.sframe'
-	ANNOTATIONS_COL = 'annotations'
-	IMAGE_COL = 'image'
-	MASKS_COL = 'stateMasks'
-	DRAW_BOUNDINGS = False
-	DRAW_MASKS = False
-	DRAW_CENTERS = False
-	DRAW_CENTER_LINES = False
-	DRAW_FRAME_NUM = True
-	FPS = 30
-	BUFFER = 64
+TARGET_DIR = './'
+OUTPUT_NAME = 'result.mp4'
+SFRAME = './sample.sframe'
+ANNOTATIONS_COL = 'annotations'
+IMAGE_COL = 'image'
+MASKS_COL = 'stateMasks'
+DRAW_BOUNDINGS = False
+DRAW_MASKS = False
+DRAW_CENTERS = False
+DRAW_CENTER_LINES = False
+DRAW_FRAME_NUM = True
+FPS = 30
+BUFFER = 64
 ```
 This will take in input `sample.sframe` in the current working directory, and write the output at 30 frames a second to the current working directory as `result.mp4`. The tool will specifically search for columns named `annotations`, `image`, and `stateMasks` for annotation, image, and mask data respectively. There are no bounding boxes, masks, centers, or length 64 contrails drawn. The frame number will be shown.
 
@@ -48,11 +48,11 @@ This will take in input `sample.sframe` in the current working directory, and wr
 This tool expects a model in a standard Turicreate format and a video (in any FOURCC-accpeted format). Simply set the right configurations! Here's an example set of configurations for model testing, where the video is named `test.mov` in the working directory, the model is named `sample.model` in the working directory, and every object predicted with the label `mainPlate` should be drawn.
 
 ```python
-	TEST_MODEL = True
-	VIDEO_PATH = './test.mov'
-	MODEL_PATH = './sample.model'
-	MAX_NUM_OBJECTS = -1
- TARGET_LABEL = 'mainPlate'
+TEST_MODEL = True
+VIDEO_PATH = './test.mov'
+MODEL_PATH = './sample.model'
+MAX_NUM_OBJECTS = -1
+TARGET_LABEL = 'mainPlate'
 ```
 
 ## Getting Started
