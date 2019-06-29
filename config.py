@@ -1,6 +1,6 @@
 class Configs:
 	# Model Testing 
-	TEST_MODEL = True
+	TEST_MODEL = False
 	VIDEO_PATH = './test.mov'
 	MODEL_PATH = './sample.model'
 	MAX_NUM_OBJECTS = 2
@@ -18,7 +18,7 @@ class Configs:
 
 	# Video Options Configurations
 	TARGET_LABEL = 'mainPlate'
-	DRAW_BOUNDINGS = False
+	DRAW_BOUNDINGS = True
 	DRAW_MASKS = False
 	DRAW_CENTERS = False
 	DRAW_CENTER_LINES = False

@@ -3,8 +3,9 @@ import turicreate as tc
 from tqdm import tqdm
 
 from utils.draw import *
+from utils.segment import *
 
-def predict_on_video(video_path, model_path, target_label=None, num_objs=-1, draw_frame_num=True):
+def predict_on_video(video_path, model_path, target_label=None, num_objs=-1, draw_masks=False, draw_frame_num=True):
 	model = tc.load_model(model_path)
 	frames = read_video(video_path)
 
@@ -14,13 +15,19 @@ def predict_on_video(video_path, model_path, target_label=None, num_objs=-1, dra
 		frame = frames[i]
 
 		# Predict and draw
-		tc_frame = get_tc_img(frame)
-		pred = model.predict(tc_frame, verbose=False)
+		pred = model.predict(get_tc_img(frame), verbose=False)
 		pred = clean_predictions(pred, target_label=target_label, num_objs=num_objs)
-		frame = tc.object_detector.util.draw_bounding_boxes(tc_frame, pred).pixel_data
+
+		if draw_masks:
+			crops = get_crops(frame, pred)
+			segs = segment(crops)
+			frame = draw(frame, pred, segs)
 
 		if draw_frame_num:
 			frame = draw_text(frame, str(i))
+
+		# frame = tc.object_detector.util.draw_bounding_boxes(get_tc_img(frame), pred).pixel_data
+		frame = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
 
 		pred_frames.append(frame)
 
@@ -82,7 +89,7 @@ def extract_imgs_from_sframe(sframe, target_label='mainPlate', buffer=64, draw_c
 	sf = list(tc.load_sframe(sframe))
 
 	frames = []
-	frame_num = 1
+	frame_num = 0
 	centers = {}
 
 	for x in tqdm(sf, desc='Parsing'):

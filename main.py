@@ -9,6 +9,7 @@ if Configs.TEST_MODEL:
 		Configs.VIDEO_PATH, 
 		Configs.MODEL_PATH, 
 		target_label=Configs.TARGET_LABEL, 
+		draw_masks=Configs.DRAW_MASKS,
 		num_objs=Configs.MAX_NUM_OBJECTS, 
 		draw_frame_num=Configs.DRAW_FRAME_NUM)
 else:
