@@ -1,0 +1,25 @@
+--- 
+# Model Testing 
+predict: True
+videos_dir: ./test.mov
+model_path: ./sample.model
+max_num_objects: 2
+
+# Visualization
+target_dir: ./output
+sframe_dir: ./sframes
+
+# SFrame Column Configurations
+annotations_col: annotations
+image_col: image
+masks_col: stateMasks
+
+# Drawing Options 
+target_label: mainPlate
+draw_boundings: On
+draw_masks: Off
+draw_centers: Off
+draw_contrail: Off
+draw_frame_num: On
+fps: 30
+buffer: 64
