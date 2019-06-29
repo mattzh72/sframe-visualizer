@@ -1,7 +1,7 @@
 --- 
 # Model Testing 
 predict: True
-videos_dir: ./test.mov
+videos_dir: ./videos
 model_path: ./sample.model
 max_num_objects: 2
 

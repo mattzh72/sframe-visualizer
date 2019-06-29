@@ -58,7 +58,7 @@ def read_video(video_path):
 
 	return frames
 
-def compile_video(frames, rgb=True, fps=30, target='./output.mp4'):
+def compile_video(frames, fps=30, target='./output.mp4'):
 	assert len(frames) > 0, 'Frames list is empty.'
 
 	height, width, layers = frames[0].shape
@@ -66,9 +66,6 @@ def compile_video(frames, rgb=True, fps=30, target='./output.mp4'):
 	video = cv2.VideoWriter(target, codec, fps, (width,height))
 	
 	for frame in tqdm(frames, desc='Writing'):
-		if rgb:
-			frame = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
-
 		video.write(frame)
 
 	cv2.destroyAllWindows()
