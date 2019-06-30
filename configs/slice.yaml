@@ -1,0 +1,8 @@
+--- 
+  haha.sframe: 
+    - [0, 234]
+    - [500, 550]
+
+--- 
+  input: ./sframes
+  output: ./output

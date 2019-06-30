@@ -1,0 +1,11 @@
+--- 
+# Model Testing 
+videos_dir: ./videos
+model_path: ./sample.model
+max_num_objects: 2
+
+# Drawing Options 
+target_label: mainPlate
+draw_centers: Off
+draw_contrail: Off
+draw_frame_num: On
