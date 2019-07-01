@@ -1,22 +1,28 @@
 import turicreate as tc
 import os
-import yaml
+from tqdm import tqdm
 
-from utils.parse import extract_imgs_from_sframe, compile_video, predict_on_video 
+from tools.utils.parse import extract_imgs_from_sframe, compile_video, predict_on_video 
 
 def predict(configs):
 	vid_exts = (".3g2", ".3gp", ".asf", ".asx", ".avi", ".flv", ".m2ts", ".mkv", ".mov", ".mp4", ".mpg", ".mpeg", ".rm", ".swf", ".vob", ".wmv")
+	model_exts = (".model")
 
-	videos = [file for file in os.listdir(configs['videos_dir']) if file.endswith(vid_exts)] 
+	videos = [file for file in os.listdir(configs['input_dir']) if file.endswith(vid_exts)] 
+	print("{0} videos found.".format(len(videos)))
+	models = [file for file in os.listdir(configs['input_dir']) if file.endswith(model_exts)]
+	print("{0} models found.".format(len(models)))
+
 	pbar = tqdm(videos)
 	for video in pbar:
-		frames = predict_on_video(
-			configs['videos_dir'], 
-			configs['model_path'], 
-			target_label=configs['target_label'], 
-			draw_masks=configs['draw_masks'],
-			num_objs=configs['max_num_objects'], 
-			draw_frame_num=configs['draw_frame_num'])
+		for model in models:
+			frames = predict_on_video(
+				os.path.join(configs['input_dir'], video), 
+				os.path.join(configs['input_dir'], model), 
+				target_label=configs['target_label'], 
+				num_objs=configs['max_num_objects'],
+				draw_masks=configs['draw_masks'],
+				draw_frame_num=configs['draw_frame_num'])
 
-		# Write to disk
-		compile_video(frames, target=os.path.join(configs['target_dir'], video.split('.')[-2] + '.sframe'), fps=configs['fps'])
+			# Write to disk
+			compile_video(frames, target=os.path.join(configs['output_dir'], video.split('.')[-2] + '.mp4'), fps=configs['fps'])

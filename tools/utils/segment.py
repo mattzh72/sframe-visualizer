@@ -17,7 +17,7 @@ def get_crops(img, annotations, padding=0):
 def segment(crops):
 	segs = []
 	for c in crops:
-		gray = cv2.cvtColor(shifted, cv2.COLOR_BGR2GRAY)
+		gray = cv2.cvtColor(c, cv2.COLOR_BGR2GRAY)
 		ret, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
 
 		# noise removal

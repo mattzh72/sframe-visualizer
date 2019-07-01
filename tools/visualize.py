@@ -3,16 +3,16 @@ import os
 import yaml
 from tqdm import tqdm
 
-from utils.parse import extract_imgs_from_sframe, compile_video
+from tools.utils.parse import extract_imgs_from_sframe, compile_video
 
 def visualize(configs):
 	sf_exts = (".sframe")
 
-	sframes = [file for file in os.listdir(configs['sframes_dir']) if file.endswith(sf_exts)] 
+	sframes = [file for file in os.listdir(configs['input_dir']) if file.endswith(sf_exts)] 
 	pbar = tqdm(sframes)
 	for sframe in sframes:
 		frames = extract_imgs_from_sframe(
-			os.path.join(configs['sframes_dir'], sframe), 
+			os.path.join(configs['input_dir'], sframe), 
 			target_label=configs['target_label'],
 			buffer=configs['buffer'],
 			draw_center=configs['draw_centers'],
@@ -25,4 +25,4 @@ def visualize(configs):
 			masks_col=configs['masks_col'])
 
 		# Write to disk
-		compile_video(frames, target=os.path.join(configs['target_dir'], sframe.split('.')[-2] + '.mp4'), fps=configs['fps'])
+		compile_video(frames, target=os.path.join(configs['output_dir'], sframe.split('.')[-2] + '.mp4'), fps=configs['fps'])

@@ -1,15 +1,9 @@
 --- 
-# Model Testing 
-predict: True
-videos_dir: ./videos
-model_path: ./sample.model
+input_dir: ./input
+output_dir: ./output
 max_num_objects: 2
 
-# Visualization
-target_dir: ./output
-sframe_dir: ./sframes
-
-# SFrame Column Configurations
+# Column Configurations
 annotations_col: annotations
 image_col: image
 masks_col: stateMasks

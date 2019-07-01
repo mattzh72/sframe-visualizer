@@ -1,9 +1,10 @@
 import cv2
 import turicreate as tc
 from tqdm import tqdm
+import numpy as np
 
-from utils.draw import *
-from utils.segment import *
+from tools.utils.draw import *
+from tools.utils.segment import *
 
 def predict_on_video(video_path, model_path, target_label=None, num_objs=-1, draw_masks=False, draw_frame_num=True):
 	model = tc.load_model(model_path)
@@ -26,36 +27,54 @@ def predict_on_video(video_path, model_path, target_label=None, num_objs=-1, dra
 		if draw_frame_num:
 			frame = draw_text(frame, str(i))
 
-		# frame = tc.object_detector.util.draw_bounding_boxes(get_tc_img(frame), pred).pixel_data
-		frame = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
-
+		frame = tc.object_detector.util.draw_bounding_boxes(get_tc_img(frame), pred).pixel_data
 		pred_frames.append(frame)
 
 	return pred_frames
 
+def get_prediction_sframe(video_path, model_path, target_label=None, num_objs=-1):
+	frames, model = read_video(video_path), tc.load_model(model_path)
+
+	sf_dict = {'image': [], 'annotations': []}
+
+	for i in tqdm(range(len(frames)), desc='Predicting'):
+		frame = frames[i]
+
+		# Predict and draw
+		pred = model.predict(get_tc_img(frame), verbose=False)
+		pred = clean_predictions(pred, target_label=target_label, num_objs=num_objs)
+
+		sf_dict['image'].append(frame)
+		sf_dict['annotations'].append(pred)
+
+	return tc.SFrame(sf_dict)
+
 def clean_predictions(pred, target_label=None, num_objs=-1):
 	if target_label:
-		for i in range(len(pred)):
-			if pred[i]['label'] != target_label:
-				del pred[i]
+		pred = [p for p in pred if p['label'] == target_label]
 
 	if num_objs > 0:
 		pred = sorted(pred, reverse=True, key=lambda x: x['confidence'])[:num_objs]
 
 	return pred
 
-def read_video(video_path):
+def read_video(video_path, downsize=0.3):
 	video = cv2.VideoCapture(video_path)
-	ret, frame = video.read()
+	frame_count = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
 
-	count = 0
+	ret, frame = video.read()
 	frames = []
 
+	pbar = tqdm(total=frame_count)
 	while ret:
+		if downsize != 1:
+			frame = cv2.resize(frame, None, fx=downsize, fy=downsize)
+
 		frames.append(frame)
 		ret, frame = video.read()
-		count += 1
+		pbar.update(1)
 
+	pbar.close()
 	return frames
 
 def compile_video(frames, fps=30, target='./output.mp4'):
