@@ -13,9 +13,14 @@ def predict(configs):
 	models = [file for file in os.listdir(configs['input_dir']) if file.endswith(model_exts)]
 	print("{0} models found.".format(len(models)))
 
+	file_name_template = "{0}_{1}.mp4"
 	pbar = tqdm(videos)
 	for video in pbar:
+		video_name = video.split('.')[-2]
 		for model in models:
+			model_name = model.split('.')[-2]
+			pbar.set_description("Video {0}: Model {1}".format(video_name, model_name))
+
 			frames = predict_on_video(
 				os.path.join(configs['input_dir'], video), 
 				os.path.join(configs['input_dir'], model), 
@@ -25,4 +30,6 @@ def predict(configs):
 				draw_frame_num=configs['draw_frame_num'])
 
 			# Write to disk
-			compile_video(frames, target=os.path.join(configs['output_dir'], video.split('.')[-2] + '.mp4'), fps=configs['fps'])
+			compile_video(frames, target=os.path.join(configs['output_dir'], file_name_template.format(video_name, model_name)), fps=configs['fps'])
+
+	pbar.close()

@@ -10,7 +10,8 @@ def visualize(configs):
 
 	sframes = [file for file in os.listdir(configs['input_dir']) if file.endswith(sf_exts)] 
 	pbar = tqdm(sframes)
-	for sframe in sframes:
+	for sframe in pbar:
+		pbar.set_description(sframe)
 		frames = extract_imgs_from_sframe(
 			os.path.join(configs['input_dir'], sframe), 
 			target_label=configs['target_label'],
@@ -26,3 +27,5 @@ def visualize(configs):
 
 		# Write to disk
 		compile_video(frames, target=os.path.join(configs['output_dir'], sframe.split('.')[-2] + '.mp4'), fps=configs['fps'])
+
+	pbar.close()

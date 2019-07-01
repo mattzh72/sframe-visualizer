@@ -22,7 +22,7 @@ elif args.t:
 	tools.predict(configs)
 elif args.s:
 	tools.slice_vids(configs)
-elif args.s:
+elif args.e:
 	tools.evaluate(configs)
 else:
 	raise ValueError('Did not set flag: -v, -p, -s')
