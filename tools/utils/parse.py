@@ -6,7 +6,7 @@ import numpy as np
 from tools.utils.draw import *
 from tools.utils.segment import *
 
-def predict_on_video(video_path, model_path, target_label=None, num_objs=-1, draw_masks=False, draw_frame_num=True):
+def predict_on_video(video_path, model_path, confidence_threshold=0.25, iou_threshold=0.25, target_label=None, num_objs=-1, draw_masks=False, draw_frame_num=True):
 	model = tc.load_model(model_path)
 	frames = read_video(video_path)
 
@@ -16,7 +16,10 @@ def predict_on_video(video_path, model_path, target_label=None, num_objs=-1, dra
 		frame = frames[i]
 
 		# Predict and draw
-		pred = model.predict(get_tc_img(frame), verbose=False)
+		pred = model.predict(get_tc_img(frame), 
+			confidence_threshold=confidence_threshold, 
+			iou_threshold=iou_threshold,
+			verbose=False)
 		pred = clean_predictions(pred, target_label=target_label, num_objs=num_objs)
 
 		if draw_masks:

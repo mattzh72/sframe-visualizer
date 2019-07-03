@@ -3,6 +3,9 @@ input_dir: ./input
 output_dir: ./output
 max_num_objects: 2
 
+confidence_threshold: 0.75
+iou_threshold: 0.25
+
 # Column Configurations
 annotations_col: annotations
 image_col: image
@@ -12,7 +15,7 @@ masks_col: stateMasks
 target_label: mainPlate
 draw_boundings: On
 draw_masks: Off
-draw_centers: Off
+draw_centers: On
 draw_contrail: Off
 draw_frame_num: On
 fps: 30

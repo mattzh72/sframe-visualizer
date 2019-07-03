@@ -5,7 +5,7 @@ import tools
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-v', action='store_true')
-parser.add_argument('-t', action='store_true')
+parser.add_argument('-p', action='store_true')
 parser.add_argument('-s', action='store_true')
 parser.add_argument('-e', action='store_true')
 args = parser.parse_args()
@@ -18,7 +18,7 @@ with open('./configs.yaml', 'r') as stream:
 
 if args.v:
 	tools.visualize(configs)
-elif args.t:
+elif args.p:
 	tools.predict(configs)
 elif args.s:
 	tools.slice_vids(configs)

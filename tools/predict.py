@@ -25,6 +25,8 @@ def predict(configs):
 				os.path.join(configs['input_dir'], video), 
 				os.path.join(configs['input_dir'], model), 
 				target_label=configs['target_label'], 
+				confidence_threshold=configs['confidence_threshold'],
+				iou_threshold=configs['iou_threshold'],
 				num_objs=configs['max_num_objects'],
 				draw_masks=configs['draw_masks'],
 				draw_frame_num=configs['draw_frame_num'])
