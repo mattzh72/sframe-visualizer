@@ -4,10 +4,10 @@ import yaml
 import tools
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-v', action='store_true')
-parser.add_argument('-p', action='store_true')
-parser.add_argument('-s', action='store_true')
-parser.add_argument('-e', action='store_true')
+parser.add_argument('-visualize', action='store_true')
+parser.add_argument('-predict', action='store_true')
+parser.add_argument('-slice', action='store_true')
+parser.add_argument('-evaluate', action='store_true')
 args = parser.parse_args()
 
 with open('./configs.yaml', 'r') as stream:
@@ -16,13 +16,13 @@ with open('./configs.yaml', 'r') as stream:
 	except yaml.YAMLError as exc:
 		print(exc)
 
-if args.v:
+if args.visualize:
 	tools.visualize(configs)
-elif args.p:
+elif args.predict:
 	tools.predict(configs)
-elif args.s:
+elif args.slice:
 	tools.slice_vids(configs)
-elif args.e:
+elif args.evaluate:
 	tools.evaluate(configs)
 else:
 	raise ValueError('Did not set flag: -v, -p, -s')

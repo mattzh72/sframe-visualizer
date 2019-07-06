@@ -3,6 +3,8 @@ import os
 from tqdm import tqdm
 import yaml
 
+from tools.utils.metrics import *
+
 def evaluate(configs):
 	sframe_exts = (".sframe")
 	model_exts = (".model")
@@ -17,7 +19,7 @@ def evaluate(configs):
 		scores[sframe_path] = []
 
 		# Load in Sframe
-		sf = tc.load_sframe(os.path.join(configs['input_dir'], sframe_path))[:10]
+		sf = tc.load_sframe(os.path.join(configs['input_dir'], sframe_path))
 
 		for model_path in models:
 			# Update progress bar description
@@ -25,15 +27,32 @@ def evaluate(configs):
 			
 			# Load in model and evaulate
 			model = tc.load_model(os.path.join(configs['input_dir'], model_path))
-			results = model.evaluate(sf)
 
-			scores[sframe_path].append({'model':model_path, 'scores': results['mean_average_precision_50'].item()})
+			if configs['metric'].upper() == 'MAP':
+				results = evaluate_mAP(model, sf, 
+					target_label=configs['target_label'],
+					confidence_threshold=configs['confidence_threshold'], 
+					iou_threshold=configs['iou_threshold'])
+			elif configs['metric'].upper() == 'RSME':
+				results = evaluate_center_RSME(model, sf,
+					confidence_threshold=configs['confidence_threshold'], 
+					iou_threshold=configs['iou_threshold'], 
+					image_col=configs['image_col'], 
+					annotations_col=configs['annotations_col'])
+			else:
+				results = evaluate_center_MAE(model, sf,
+					confidence_threshold=configs['confidence_threshold'], 
+					iou_threshold=configs['iou_threshold'], 
+					image_col=configs['image_col'], 
+					annotations_col=configs['annotations_col'])
+
+			scores[sframe_path].append({'model':model_path, 'scores': results})
 
 		scores[sframe_path] = sorted(scores[sframe_path], key=lambda x: x['scores'])
 
 	pbar.close()
 
-	with open(os.path.join(configs['output_dir'], 'scores.yaml'), 'w') as file:
+	with open(os.path.join(configs['output_dir'], 'scores_{0}.yaml'.format(configs['metric'])), 'w') as file:
 		file.write(yaml.dump(scores))
 
 

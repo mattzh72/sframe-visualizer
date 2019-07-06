@@ -6,7 +6,7 @@ import numpy as np
 from tools.utils.draw import *
 from tools.utils.segment import *
 
-def predict_on_video(video_path, model_path, confidence_threshold=0.25, iou_threshold=0.25, target_label=None, num_objs=-1, draw_masks=False, draw_frame_num=True):
+def predict_on_video(video_path, model_path, confidence_threshold=0.75, iou_threshold=0.25, target_label=None, num_objs=-1, draw_masks=False, draw_frame_num=True):
 	model = tc.load_model(model_path)
 	frames = read_video(video_path)
 
