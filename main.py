@@ -25,7 +25,7 @@ elif args.slice:
 elif args.evaluate:
 	tools.evaluate(configs)
 else:
-	raise ValueError('Did not set flag: -v, -p, -s')
+	raise ValueError('Did not set flag: -visualize, -predict, -slice, -evaluate')
 
 
 
