@@ -1,5 +1,7 @@
 # SFrame-Visualizer
 
+> Note: this is not ready for public use yet.
+
 SFrame-Visualizer is a video analysis tool written in 100%  Python to visualize SFrames for data analytics. It can be used to purely visualize a given SFrame, or can be used to visualize predictions made by `.model` on a target video. It is also capable of drawing **bounding boxes, segmentations, moment centers, and contrail paths**.
 
 This package has the following dependencies: **OpenCV 4.1.0**, **Numpy 1.16.2**, **tqdm 4.28.1** and **Turicreate 5.6**.
