@@ -1,6 +1,6 @@
 # SFrame-Visualizer
 
-![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)
+## NOTE: THIS TOOL IS NOT READY FOR USE BY THE PUBLIC YET.
 
 SFrame-Visualizer is a video analysis tool written in 100%  Python to visualize SFrames for data analytics. It can be used to purely visualize a given SFrame, or can be used to visualize predictions made by `.model` on a target video. It is also capable of drawing **bounding boxes, segmentations, moment centers, and contrail paths**.
 
